@@ -188,6 +188,7 @@ module Fog
       end
 
       class Real
+        attr_reader :auth_token
 
         def initialize(options={})
           require 'multi_json'
