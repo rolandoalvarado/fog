@@ -194,7 +194,8 @@ module Fog
         def initialize(options={})
           require 'multi_json'
 
-          @openstack_auth_token = options[:openstack_auth_token]
+          @openstack_auth_token        = options[:openstack_auth_token]
+          @openstack_identity_public_endpoint = options[:openstack_identity_endpoint]
 
           unless @openstack_auth_token
             missing_credentials = Array.new
@@ -206,7 +207,7 @@ module Fog
             raise ArgumentError, "Missing required arguments: #{missing_credentials.join(', ')}" unless missing_credentials.empty?
           end
 
-          @openstack_tenant   = options[:openstack_tenant]
+          @openstack_tenant     = options[:openstack_tenant]
           @openstack_auth_uri   = URI.parse(options[:openstack_auth_url])
           @openstack_management_url       = options[:openstack_management_url]
           @openstack_must_reauthenticate  = false
@@ -225,7 +226,8 @@ module Fog
           { :provider                 => 'openstack',
             :openstack_auth_url       => @openstack_auth_uri.to_s,
             :openstack_auth_token     => @auth_token,
-            :openstack_management_url => @openstack_management_url }
+            :openstack_management_url => @openstack_management_url,
+            :openstack_identity_endpoint => @openstack_identity_public_endpoint }
         end
 
         def reload
