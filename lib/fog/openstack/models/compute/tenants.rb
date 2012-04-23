@@ -12,9 +12,7 @@ module Fog
         end
 
         def find_by_id(id)
-          self.find {|tenant| tenant.id == id} ||
-            Fog::Compute::OpenStack::Tenant.new(
-              connection.get_tenant(id).body['tenant'])
+          self.find {|tenant| tenant.id == id}
         end
 
         def usages(start_date = nil, end_date = nil, details = false)
