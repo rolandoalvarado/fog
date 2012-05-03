@@ -49,11 +49,11 @@ module Fog
           self
         end
 
-        def add_user_role(user_id, role_id)
+        def grant_user_role(user_id, role_id)
           connection.add_user_to_tenant(self.id, user_id, role_id)
         end
 
-        def remove_user_role(user_id, role_id)
+        def revoke_user_role(user_id, role_id)
           connection.remove_user_from_tenant(self.id, user_id, role_id)
         end
       end # class Tenant
