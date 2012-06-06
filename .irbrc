@@ -33,11 +33,13 @@ def connect(username, password, tenant = nil, url = 'http://192.168.27.100:35357
 
   identity = Fog::Identity.new(parameters)
   compute = Fog::Compute.new(parameters)
+  volume = Fog::Volume.new(parameters)
   image = Fog::Image.new(parameters)
 
   connections[username.to_sym] = {
     :identity => identity,
     :compute  => compute ,
+    :volume   => volume  ,
     :image    => image
   }
 end
