@@ -5,10 +5,10 @@ Gem::Specification.new do |s|
   ## Leave these as is they will be modified for you by the rake gemspec task.
   ## If your rubyforge_project name is different, then edit it and comment out
   ## the sub! line in the Rakefile
-  s.name              = 'fog'
+  s.name              = 'morph-fog'
   s.version           = '1.3.2'
-  s.date              = '2012-03-27'
-  s.rubyforge_project = 'fog'
+  s.date              = '2012-06-06'
+  s.rubyforge_project = 'morph-fog'
 
 
   ## Make sure your summary is short. The description may be as long
