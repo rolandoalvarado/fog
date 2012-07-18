@@ -217,6 +217,7 @@ module Fog
 
       class Real
         attr_reader :auth_token
+        attr_reader :auth_token_expiration
         attr_reader :current_user
         attr_reader :current_tenant
 
@@ -328,6 +329,7 @@ module Fog
 
             @openstack_must_reauthenticate = false
             @auth_token               = credentials[:token]
+            @auth_token_expiration    = credentials[:expires]
             @openstack_management_url = credentials[:server_management_url]
             @openstack_identity_public_endpoint  = credentials[:identity_public_endpoint]
             uri = URI.parse(@openstack_management_url)
