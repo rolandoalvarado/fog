@@ -60,13 +60,12 @@ task :test do
 end
 
 def tests(mocked)
-  Formatador.display_line
-  sh("export FOG_MOCK=#{mocked} && bundle exec spec spec")
-  Formatador.display_line
   start = Time.now.to_i
   threads = []
   Thread.main[:results] = []
   Fog.providers.each do |key, value|
+    next unless key == :openstack
+
     threads << Thread.new do
       Thread.main[:results] << {
         :provider => value,
