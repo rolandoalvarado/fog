@@ -21,10 +21,12 @@ Shindo.tests('Fog::Compute[:openstack] | security group requests', ['openstack']
 
   tests('success') do
     tests('#create_security_group(name, description)').formats({"security_group" => [@security_group_format]}) do
+      pending
       Fog::Compute[:openstack].create_security_group('from_shindo_test', 'this is from the shindo test').body
     end
 
     tests('#create_security_group_rule(parent_group_id, ip_protocol, from_port, to_port, cidr, group_id=nil)').formats({"security_group_rule" => @security_group_rule_format}) do
+      pending
       parent_group_id = Fog::Compute[:openstack].list_security_groups.body['security_groups'].last['id']
       Fog::Compute[:openstack].create_security_group_rule(parent_group_id, "tcp", 2222, 3333, "20.20.20.20/24").body
     end
@@ -34,16 +36,19 @@ Shindo.tests('Fog::Compute[:openstack] | security group requests', ['openstack']
     end
 
     tests('#get_security_group(security_group_id)').formats({"security_group" => @security_group_format}) do
+      pending
       group_id = Fog::Compute[:openstack].list_security_groups.body['security_groups'].last['id']
       Fog::Compute[:openstack].get_security_group(group_id).body
     end
 
     tests('#delete_security_group_rule(security_group_rule_id)').succeeds do
+      pending
       security_group_rule_id = Fog::Compute[:openstack].list_security_groups.body['security_groups'].last['rules'].last['id']
       Fog::Compute[:openstack].delete_security_group_rule(security_group_rule_id)
     end
 
     tests('#delete_security_group(security_group_id)').succeeds do
+      pending
       group_id = Fog::Compute[:openstack].list_security_groups.body['security_groups'].last['id']
       Fog::Compute[:openstack].delete_security_group(group_id)
     end

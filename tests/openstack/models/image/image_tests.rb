@@ -7,6 +7,7 @@ Shindo.tests("Fog::Image[:openstack] | image", ['openstack']) do
     end
 
     tests('#update').succeeds do
+      pending
       @instance.name = 'edit test image'
       @instance.update
       @instance.name == 'edit test image'

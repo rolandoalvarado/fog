@@ -18,6 +18,7 @@ Shindo.tests('Fog::Identity[:openstack] | user requests', ['openstack']) do
     end
 
     tests("#update_user(#{@user['id']}, :name => 'fogupdateduser')").succeeds do
+      pending
       Fog::Identity[:openstack].update_user(@user['id'], :name => 'fogupdateduser', :email => 'fog@test.com')
     end
 

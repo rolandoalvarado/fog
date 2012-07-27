@@ -21,10 +21,13 @@ Shindo.tests('Fog::Identity[:openstack] | role requests', ['openstack']) do
     end
 
     tests('#create_user_role(@tenant["id"], @user["id"], @role["id"])').formats(@role_format) do
+      pending
       Fog::Identity[:openstack].create_user_role(@tenant['id'], @user['id'], @role['id']).body['role']
     end
 
+    pending
     tests("#list_roles_for_user_on_tenant('#{@tenant['id']}','#{@user['id']}')").formats([@role_format]) do
+      pending
       Fog::Identity[:openstack].list_roles_for_user_on_tenant(@tenant['id'], @user['id']).body['roles']
     end
 

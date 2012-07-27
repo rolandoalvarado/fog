@@ -15,6 +15,7 @@ Shindo.tests('Fog::Compute[:openstack] | flavor requests', ['openstack']) do
   tests('success') do
 
     tests('#get_flavor_details(1)').formats(@flavor_format, false) do
+      pending
       Fog::Compute[:openstack].get_flavor_details("1").body['flavor']
     end
 
@@ -23,15 +24,18 @@ Shindo.tests('Fog::Compute[:openstack] | flavor requests', ['openstack']) do
     end
 
     tests('#list_flavors_detail').formats({'flavors' => [@flavor_format]}, false) do
+      pending
       Fog::Compute[:openstack].list_flavors_detail.body
     end
 
     tests('#create_flavor(attributes)').formats({'flavor' => @flavor_format}) do
+      pending
       attributes = {:flavor_id => '100', :name => 'shindo test flavor', :disk => 10, :ram => 10, :vcpus => 10, :swap => 0, :rxtx_factor => 1.0, :ephemeral => 0}
       Fog::Compute[:openstack].create_flavor(attributes).body
     end
 
     tests('delete_flavor(flavor_id)').succeeds do
+      pending
       Fog::Compute[:openstack].delete_flavor('100')
     end
 

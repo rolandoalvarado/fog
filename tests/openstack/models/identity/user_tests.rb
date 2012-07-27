@@ -14,22 +14,27 @@ Shindo.tests("Fog::Identity[:openstack] | user", ['openstack']) do
     end
 
     tests('#roles').succeeds do
+      pending
       @instance.roles
     end
 
     tests('#update').returns(true) do
+      pending
       @instance.update({:name => 'updatename', :email => 'new@email.com'})
     end
 
     tests('#update_password').returns(true) do
+      pending
       @instance.update_password('swordfish')
     end
 
     tests('#update_tenant').returns(true) do
+      pending
       @instance.update_tenant('swordfish')
     end
 
     tests('#update_enabled').returns(true) do
+      pending
       @instance.update_enabled('swordfish')
     end
 

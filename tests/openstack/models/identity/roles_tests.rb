@@ -6,10 +6,12 @@ Shindo.tests("Fog::Identity[:openstack] | roles", ['openstack']) do
 
   tests('success') do
     tests('#all').succeeds do
+      pending
       @roles.all
     end
 
     tests('#get').succeeds do
+      pending
       @roles.get @roles.first.id
     end
   end
