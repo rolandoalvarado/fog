@@ -32,15 +32,32 @@ module Fog
             end
           end
 
+          #TODO: Edit this once https://bugs.launchpad.net/glance/+bug/1008874 is fixed
 
+          upload_thread = Thread.new {
+            request(
+              :headers     => data,
+              :body     => body,
+              :expects  => 201,
+              :method   => 'POST',
+              :path     => "images"
+            )
+          }
 
-          request(
-            :headers     => data,
-            :body     => body,
-            :expects  => 201,
-            :method   => 'POST',
-            :path     => "images"
-          )
+          upload_thread.abort_on_exception = true
+
+          sleep 2
+
+          images = request(
+            :expects => [200, 204],
+            :method  => 'GET',
+            :path    => 'images'
+          ).body["images"]
+
+          response = Excon::Response.new
+          response.status = 201
+          response.body = {"image" => images.select { |image| image['name'] == attributes[:name] }.first}
+          response
         end
 
       end
