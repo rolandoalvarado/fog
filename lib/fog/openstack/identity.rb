@@ -54,6 +54,11 @@ module Fog
 
 
       class Mock
+        attr_reader :auth_token
+        attr_reader :auth_token_expiration
+        attr_reader :current_user
+        attr_reader :current_tenant
+
         def self.data
           @data ||= Hash.new do |hash, key|
             hash[key] = {
@@ -71,6 +76,26 @@ module Fog
         def initialize(options={})
           require 'multi_json'
           @openstack_username = options[:openstack_username]
+          @openstack_auth_uri   = URI.parse(options[:openstack_auth_url])
+          @openstack_management_url = @openstack_auth_uri.to_s
+
+          @current_user_id = 1
+          @current_user = {
+            'username'  => 'admin',
+            'name' => 'admin',
+            'id' => 1,
+            'roles' => [
+              { 'id' => 1, 'name' => 'admin'  },
+              { 'id' => 2, 'name' => 'Member' }
+            ]
+          }
+
+          @auth_token = Fog::Mock.random_base64(64)
+          @auth_token_expiration = (Time.now.utc + 86400).iso8601
+          @current_tenant = {
+            'id' => 1,
+            'name' => 'admin'
+          }
 
           @data ||= { :users => {}}
           unless @data[:users].find {|u| u['name'] == options[:openstack_username]}
@@ -94,11 +119,13 @@ module Fog
         end
 
         def credentials
-          { :provider                 => 'openstack',
-            :openstack_auth_url       => @openstack_auth_uri.to_s,
-            :openstack_auth_token     => @auth_token,
-            :openstack_management_url => @openstack_management_url,
-            :openstack_current_user_id => @openstack_current_user_id}
+          { :provider                  => 'openstack',
+            :openstack_auth_url        => @openstack_auth_uri.to_s,
+            :openstack_auth_token      => @auth_token,
+            :openstack_management_url  => @openstack_management_url,
+            :openstack_current_user_id => @openstack_current_user_id,
+            :current_user              => @current_user,
+            :current_tenant            => @current_tenant}
         end
       end
 
