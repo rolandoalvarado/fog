@@ -34,14 +34,14 @@ module Fog
           response.body = {
             'volume' => {
               'id'                 => Fog::Mock.random_numbers(2),
-              'displayName'        => name,
-              'displayDescription' => description,
+              'display_name'        => name,
+              'display_description' => description,
               'size'               => size,
               'status'             => 'creating',
-              'snapshotId'         => '4',
-              'volumeType'         => nil,
-              'availabilityZone'   => 'nova',
-              'createdAt'          => Time.now,
+              'snapshot_id'         => '4',
+              'volume_type'         => nil,
+              'availability_zone'   => 'nova',
+              'created_at'          => Time.now,
               'attchments'         => []
             }
           }
