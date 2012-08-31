@@ -22,7 +22,7 @@ module Fog
             "Content-Type" => "application/json",
             "Date" => Date.new
           }
-          self.data[:security_groups] ||= [
+          self.data[:groups] ||= [
             { "rules" => [
               { "from_port" => 44,
                 "group" => {},
@@ -61,7 +61,7 @@ module Fog
             "description" => "this is a test"
             }
           ]
-          response.body = { 'security_groups' => self.data[:security_groups] }
+          response.body = { 'security_groups' => self.data[:groups] }
           response
         end
       end # mock
