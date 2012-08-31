@@ -20,16 +20,18 @@ module Fog
           response.status = 200
           response.body = {
             'quota_set' => {
-              'metadata_items' => 128,
+              'cores' => 20,
+              'floating_ips' => 10,
+              'gigabytes' => 5000,
+              'id' => tenant_id,
               'injected_file_content_bytes' => 10240,
               'injected_files' => 5,
-              'gigabytes' => 1000,
-              'ram' => 51200,
-              'floating_ips' => 10,
               'instances' => 10,
-              'volumes' => 10,
-              'cores' => 20,
-              'id' => tenant_id
+              'metadata_items' => 128,
+              'ram' => 51200,
+              'security_group_rules' => 20,
+              'security_groups' => 10,
+              'volumes' => 10
             }
           }
           response
