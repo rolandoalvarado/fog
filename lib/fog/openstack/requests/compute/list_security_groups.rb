@@ -30,18 +30,17 @@ module Fog
                 "to_port" => 55,
                 "parent_group_id" => 1,
                 "ip_range" => {"cidr"=>"10.10.10.10/24"},
-                "id" => Fog::Mock.random_base64(36)
-              },
+                "id" => 1              },
               { "from_port" => 2,
                 "group" => {},
                 "ip_protocol" => "tcp",
                 "to_port" => 3,
                 "parent_group_id" => 1,
                 "ip_range" => {"cidr"=>"10.10.10.10/24"},
-                "id" => Fog::Mock.random_base64(36)
+                "id" => 2
               } ],
               "tenant_id" => @openstack_tenant,
-              "id" => Fog::Mock.random_base64(36),
+              "id" => 1,
               "name" => "default",
               "description" => "default"
             },
@@ -53,10 +52,10 @@ module Fog
                 "to_port" => 55,
                 "parent_group_id" => 2,
                 "ip_range" => { "cidr"=>"10.10.10.10/24" },
-                "id"=> Fog::Mock.random_base64(36)
+                "id" => 1
               } ],
             "tenant_id" => @openstack_tenant,
-            "id" => Fog::Mock.random_base64(36),
+            "id" => 2,
             "name" => "test",
             "description" => "this is a test"
             }

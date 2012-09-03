@@ -22,11 +22,11 @@ module Fog
           response.status = [200, 204][rand(1)]
           response.body = {
             'tenants' => [
-              {'id' => '1',
+              {'id' => self.current_tenant['id'],
                'description' => 'Has access to everything',
                'enabled' => true,
                'name' => 'admin'},
-              {'id' => '2',
+              {'id' => 'df9a815161eba9b76cc748fd5c5af73e',
                'description' => 'Normal tenant',
                'enabled' => true,
                'name' => 'default'},
