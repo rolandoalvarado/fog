@@ -19,7 +19,7 @@ module Fog
 
         def update_user(user_id, options)
           response = Excon::Response.new
-          if user = list_users.body['users'][user_id]
+          if user = list_users.body['users'].find {|u| u['id'] == user_id }
             if options['name']
               user['name'] = options['name']
             end
