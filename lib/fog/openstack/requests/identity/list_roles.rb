@@ -18,7 +18,13 @@ module Fog
         def list_roles
           response = Excon::Response.new
           response.status = 200
-          response.body = { 'roles' => self.data[:roles] }
+          if self.data[:roles].empty?
+            ['admin', 'Member'].each do |name|
+              id = Fog::Mock.random_hex(32)
+              self.data[:roles][id] = {'id' => id, 'name' => name}
+            end
+          end
+          response.body = { 'roles' => self.data[:roles].values }
           response
         end
 
