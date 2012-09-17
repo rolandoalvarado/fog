@@ -52,30 +52,41 @@ module Fog
       request :get_role
       request :list_roles
 
+      request :set_tenant
+
 
       class Mock
         attr_reader :auth_token
+        attr_reader :unscoped_token
         attr_reader :auth_token_expiration
         attr_reader :current_user
         attr_reader :current_tenant
 
         def self.data
+          @users   ||= {}
+          @roles   ||= {}
+          @tenants ||= {}
+
           @data ||= Hash.new do |hash, key|
             hash[key] = {
-              :users   => {},
-              :roles   => {},
-              :tenants => {}
+              :users   => @users,
+              :roles   => @roles,
+              :tenants => @tenants
             }
           end
         end
 
-        def self.reset
-          @data = nil
+        def self.reset!
+          @data  = nil
+          @users = nil
+          @roles = nil
+          @tenants = nil
         end
 
         def initialize(options={})
           require 'multi_json'
-          @openstack_username = options[:openstack_username]
+          @openstack_username = options[:openstack_username] || 'admin'
+          @openstack_tenant   = options[:openstack_tenant]   || 'admin'
           @openstack_auth_uri   = URI.parse(options[:openstack_auth_url])
           @openstack_management_url = @openstack_auth_uri.to_s
 
@@ -87,16 +98,16 @@ module Fog
             u['name'] == 'admin'
           end
 
-          if options[:openstack_tenant]
+          if @openstack_tenant
             @current_tenant = self.data[:tenants].values.find do |u|
-              u['name'] == options[:openstack_tenant]
+              u['name'] == @openstack_tenant
             end
 
             unless @current_tenant
               @current_tenant_id = Fog::Mock.random_hex(32)
               @current_tenant = self.data[:tenants][@current_tenant_id] = {
                 'id'   => @current_tenant_id,
-                'name' => options[:openstack_tenant]
+                'name' => @openstack_tenant
               }
             else
               @current_tenant_id = @current_tenant['id']
@@ -113,8 +124,8 @@ module Fog
             @current_user_id = Fog::Mock.random_hex(32)
             @current_user = self.data[:users][@current_user_id] = {
               'id'       => @current_user_id,
-              'name'     => options[:openstack_username],
-              'email'    => "#{options[:openstack_username]}@mock.com",
+              'name'     => @openstack_username,
+              'email'    => "#{@openstack_username}@mock.com",
               'tenantId' => Fog::Mock.random_numbers(6).to_s,
               'enabled'  => true
             }
@@ -145,6 +156,7 @@ module Fog
       class Real
         attr_reader :current_user
         attr_reader :current_tenant
+        attr_reader :unscoped_token
 
         def initialize(options={})
           require 'multi_json'
@@ -162,7 +174,7 @@ module Fog
           end
 
           @openstack_tenant   = options[:openstack_tenant]
-          @openstack_auth_uri   = URI.parse(options[:openstack_auth_url])
+          @openstack_auth_uri = URI.parse(options[:openstack_auth_url])
           @openstack_management_url       = options[:openstack_management_url]
           @openstack_must_reauthenticate  = false
           @openstack_service_name = options[:openstack_service_name] || ['identity']
@@ -231,7 +243,7 @@ module Fog
         private
 
         def authenticate
-          if @openstack_must_reauthenticate || @openstack_auth_token.nil?
+          if !@openstack_management_url || @openstack_must_reauthenticate
             options = {
               :openstack_api_key  => @openstack_api_key,
               :openstack_username => @openstack_username,
@@ -251,6 +263,7 @@ module Fog
             @auth_token = credentials[:token]
             @openstack_management_url = credentials[:server_management_url]
             @openstack_current_user_id = credentials[:current_user_id]
+            @unscoped_token = credentials[:unscoped_token]
             uri = URI.parse(@openstack_management_url)
           else
             @auth_token = @openstack_auth_token

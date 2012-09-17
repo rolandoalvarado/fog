@@ -23,7 +23,7 @@ module Fog
           response = Excon::Response.new
           response.status = 202
           data = {
-            'id'   => Fog::Mock.random_numbers(6).to_s,
+            'id'   => Fog::Mock.random_base64(64),
             'name' => name
           }
           self.data[:roles][data['id']] = data
