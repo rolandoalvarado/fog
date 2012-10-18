@@ -91,7 +91,7 @@ module Fog
         req_body = {
           'auth' => {
             'passwordCredentials'  => {
-              'username' => @openstack_username,
+              'username' => @openstack_username.to_s,
               'password' => @openstack_api_key.to_s
             }
           }
