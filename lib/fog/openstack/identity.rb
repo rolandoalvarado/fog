@@ -52,6 +52,8 @@ module Fog
       request :get_role
       request :list_roles
 
+      request :set_tenant
+
 
       class Mock
         attr_reader :auth_token
