@@ -4,7 +4,7 @@ module Fog
       class Real
 
         def reset_server_state(server_id, status)
-          body = { 'os-resetState' => { 'state' => status }}
+          body = { 'os-resetState' => { 'state' => status } }
           server_action(server_id, body, 202)
         end
 
