@@ -191,7 +191,7 @@ module Fog
           connection.disassociate_address id, floating_ip
         end
         
-        def reset_vm_state(vm_state)
+        def reset_vm_state(vm_state) #Valid State are: active and error.
           requires :id
           connection.reset_server_state id, vm_state
         end
