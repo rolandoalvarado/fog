@@ -191,9 +191,9 @@ module Fog
           connection.disassociate_address id, floating_ip
         end
         
-        def reset_vm_state(vm_state)
+        def reset_vm_state(vm_state) #NOTE: Valid States are: active, error
           requires :id
-          connection.reset_server id, vm_state
+          connection.reset_server_state id, vm_state
         end
 
         def min_count=(new_min_count)
