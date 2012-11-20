@@ -190,6 +190,11 @@ module Fog
           requires :id
           connection.disassociate_address id, floating_ip
         end
+        
+        def reset_vm_state(vm_state)
+          requires :id
+          connection.reset_server_state id, vm_state
+        end
 
         def min_count=(new_min_count)
           @min_count = new_min_count
